@@ -542,7 +542,10 @@ function validStyles(styleAttr){
 function validCustomTag(tag, attrs, lkey, value){
 	// catch the div placeholder for the iframe replacement
     if (tag === 'img' && attrs['ta-insert-video']){
-        if(lkey === 'ta-insert-video' || lkey === 'allowfullscreen' || lkey === 'frameborder' || (lkey === 'contenteditable' && value === 'false')) return true;
+        if(lkey === 'ta-insert-video' || lkey === 'allowfullscreen' || lkey === 'frameborder' || lkey === 'webkit-playsinline' || (lkey === 'contenteditble' && value === 'false')) return true;
+    }
+    if (tag === 'img' && attrs['ta-embed-video']){
+      if(lkey === 'ta-embed-video' || lkey === 'allowfullscreen' || lkey === 'frameborder' || lkey === 'webkit-playsinline' || (lkey === 'contenteditble' && value === 'false')) return true;
     }
     return false;
 }
