@@ -547,6 +547,9 @@ function validCustomTag(tag, attrs, lkey, value){
     if (tag === 'img' && attrs['ta-embed-video']){
       if(lkey === 'ta-embed-video' || lkey === 'allowfullscreen' || lkey === 'frameborder' || lkey === 'webkit-playsinline' || (lkey === 'contenteditble' && value === 'false')) return true;
     }
+    if (tag === 'img' && attrs['ta-embed-audio']){
+      if(lkey === 'ta-embed-audio' || lkey === 'allowfullscreen' || lkey === 'frameborder' || lkey === 'webkit-playsinline' || (lkey === 'contenteditble' && value === 'false')) return true;
+    }
     return false;
 }
 
