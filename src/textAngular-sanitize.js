@@ -495,23 +495,42 @@ var trim = (function() {
 
 // Custom logic for accepting certain style options only - textAngular
 // Currently allows only the color, background-color, text-align, float, width and height attributes
+// margin*; padding*; border-color;   border
+//   display: inline-block;
+//   vertical-align: middle;
+//   background-size: cover;
+//   background-position;
+//   background-repeat: no-repeat;
+//   background-image:  cloudnapps-images
 // all other attributes should be easily done through classes.
 function validStyles(styleAttr){
 	var result = '';
 	var styleArray = styleAttr.split(';');
 	angular.forEach(styleArray, function(value){
+    if(value.match(/^\s*background-image\s*:\s*url\((\/|^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9\-]{0,62}\.cloudnapps\.com)/)) {
+      result += value + ';';
+      return;
+    }
+
 		var v = value.split(':');
 		if(v.length == 2){
 			var key = trim(angular.lowercase(v[0]));
 			var value = trim(angular.lowercase(v[1]));
 			if(
-				(key === 'color' || key === 'background-color') && (
-					value.match(/^rgb\([0-9%,\. ]*\)$/i)
-					|| value.match(/^rgba\([0-9%,\. ]*\)$/i)
-					|| value.match(/^hsl\([0-9%,\. ]*\)$/i)
-					|| value.match(/^hsla\([0-9%,\. ]*\)$/i)
-					|| value.match(/^#[0-9a-f]{3,6}$/i)
-					|| value.match(/^[a-z]*$/i)
+         /(margin|padding)-?(top|right|bottom|left)?/.test(key) && /[0-9\.]*(px|em|rem|%)/.test(value)
+           || key === 'border' && value.match(/([0-9\.]*(px|em|rem|%))?(\s+(none|hidden|d(?:otted|ashed|ouble)|solid|groove|ridge|inset|outset))?/)
+           || (key === 'border-radius' || key === 'background-position') && value.match(/[0-9\.]*(px|em|rem|%)/)
+           || key === 'display' && value === 'inline-block'
+           || key === 'vertical-align' && value === 'middle'
+           || key === 'background-size' && value === 'cover'
+           || key === 'background-repeat' && value === 'no-repeat'
+           || key === 'display' && value.match(/table.*/)
+				   || (key === 'color' || key === 'background-color' || key === 'border-color') && (
+					     value.match(/^rgb\([0-9%,\. ]*\)$/i) || value.match(/^rgba\([0-9%,\. ]*\)$/i)
+               || value.match(/^hsl\([0-9%,\. ]*\)$/i)
+               || value.match(/^hsla\([0-9%,\. ]*\)$/i)
+               || value.match(/^#[0-9a-f]{3,6}$/i)
+               || value.match(/^[a-z]*$/i)
 				)
 			||
 				key === 'text-align' && (
