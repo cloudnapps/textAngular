@@ -517,7 +517,7 @@ function validStyles(styleAttr){
 			var key = trim(angular.lowercase(v[0]));
 			var value = trim(angular.lowercase(v[1]));
 			if(
-         /(margin|padding)-?(top|right|bottom|left)?/.test(key) && /[0-9\.]*(px|em|rem|%)/.test(value)
+         key.match(/(margin|padding)-?(top|right|bottom|left)?/) && value.match(/[0-9\.]*(px|em|rem|%)/)
            || key === 'border' && value.match(/([0-9\.]*(px|em|rem|%))?(\s+(none|hidden|d(?:otted|ashed|ouble)|solid|groove|ridge|inset|outset))?/)
            || (key === 'border-radius' || key === 'background-position') && value.match(/[0-9\.]*(px|em|rem|%)/)
            || key === 'display' && value === 'inline-block'
