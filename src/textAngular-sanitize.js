@@ -507,7 +507,7 @@ function validStyles(styleAttr){
 	var result = '';
 	var styleArray = styleAttr.split(';');
 	angular.forEach(styleArray, function(value){
-    if(value.match(/^\s*background-image\s*:\s*url\((\/|^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9\-]{0,62}\.cloudnapps\.com)/)) {
+    if(value.match(/^\s*background-image\s*:\s*url\((\/|https?:\/\/[A-Za-z0-9](?:[A-Za-z0-9.-]{0,61}[A-Za-z0-9])?\.cloudnapps\.com)/)) {
       result += value + ';';
       return;
     }
